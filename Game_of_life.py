@@ -15,19 +15,6 @@ class Jeudelavie:
         self.largeur = largeur
         self.hauteur = hauteur
         self.tab = np.zeros((hauteur+1, largeur+1))
-    
-#     def calcul_cellule(self,h,l):
-#         """
-#         Met à jour une cellule du tableau en hauteur h et largeur l
-#         tout en respectant les règles du jeu de la vie.
-#         """
-#         voisins = self.get_voisins(h,l)
-#         if self.tab[h][l] == 1 and voisins in [2,3]:
-#             self.tab[h][l] = 1
-#         elif self.tab[h][l] == 0 and voisins == 3:
-#             self.tab[h][l] = 1
-#         else:
-#             self.tab[h][l] = 0
             
     def calcul_cellule(self,h,l):
         """
@@ -117,9 +104,6 @@ g.tour()
 result = g.tab
 assert np.array_equal(result,expected) == True, f"le resultat devrait être \n {expected}\n mais vaut \n{result}\n"
 
-for _ in range (4):
-    print (g.tab)
-    g.tour()
 
 
 
