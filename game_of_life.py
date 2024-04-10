@@ -1,7 +1,5 @@
 import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.animation as animation
-
+import random
 
 class Jeudelavie:
     def __init__(self, hauteur, largeur):
@@ -15,11 +13,11 @@ class Jeudelavie:
         self.largeur = largeur
         self.hauteur = hauteur
         self.tab = np.zeros((hauteur+1, largeur+1))
-            
+        self.compteur = 0
     def calcul_cellule(self,h,l):
         """
-        Met à jour une cellule du tableau en hauteur h et largeur l
-        tout en respectant les règles du jeu de la vie.
+        retourne 1 ou 0 pour une cellule du tableau en hauteur h et largeur l
+        en fonction des règles du jeu de la vie.
         """
         voisins = self.get_voisins(h,l)
         if self.tab[h][l] == 1 and voisins in [2,3]:
@@ -37,12 +35,13 @@ class Jeudelavie:
         new_tab = []
         for h in range (self.hauteur):
             new_ligne = []
-            for l in range (self.largeur):
+            for l in range (self.largeur):# on boucle sur chaque "cellule" et mémorise dans new_tab ce qu'elle doit devenir
                 new_ligne.append(self.calcul_cellule(h+1,l+1))
             new_tab.append(new_ligne)
         for h in range (self.hauteur):
-            for l in range (self.largeur):
+            for l in range (self.largeur):# on boucle sur chaque "cellule" et utilise new_tab pour mettre dans la vrai matrice les bonnes valeurs
                 self.tab[h+1][l+1] = new_tab[h][l]
+        self.compteur += 1
                     
         
         
@@ -55,8 +54,17 @@ class Jeudelavie:
             return np.sum(sous_matrice)-1
         else:
             return np.sum(sous_matrice)
-    
-    
+
+    def hasard(self,taux = 0.5):
+        """
+        met des cellules vivantes au hasards en fonction du taux (0.75 = 75                                                                                                                                                                                                                                                                                                      % des cellules vivantes)
+        """   
+        for h in range (self.hauteur):
+            for l in range (self.largeur):
+                if random.randint(0,100) < taux*100:
+                    self.tab[h+1][l+1] = 1
+
+        return self
 
 
 ########## test de "get_voisins" #################
