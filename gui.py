@@ -68,7 +68,7 @@ class Pygame_app:
         """
         pygame.display.flip()
         clock.tick(60)
-        self.game.tour()
+        self.game.tour2()
 
 
     def draw(self):
@@ -82,6 +82,9 @@ class Pygame_app:
                     pygame.draw.rect(self.screen,[0,0,0],(l*6,h*6,6,6)) 
         
     
-a = Pyxel_app()
+a = Pygame_app()
 a.game.hasard(0.1)
 a.run()
+
+
+
