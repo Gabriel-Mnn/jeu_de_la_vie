@@ -42,7 +42,7 @@ class Pyxel_app:
 
 class Pygame_app:
     def __init__(self):
-        self.game = Jeudelavie(50,50)
+        self.game = Jeudelavie(100,100)
         self.screen = pygame.display.set_mode([self.game.largeur*6,self.game.hauteur*6])
         
     def run(self):
@@ -55,11 +55,20 @@ class Pygame_app:
             self.update()
             compteur += 1
             for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    self.game.hasard(0.1)
+                if event.type == pygame.MOUSEBUTTONUP:
+                    self.game.tab[self.game.hauteur//2][self.game.largeur//2] = 1
+                    self.game.tab[self.game.hauteur//2-1][self.game.largeur//2] = 1
+                    self.game.tab[self.game.hauteur//2][self.game.largeur//2+1] = 1
+                    self.game.tab[self.game.hauteur//2][self.game.largeur//2+2] = 1
+                    self.game.tab[self.game.hauteur//2-2][self.game.largeur//2+1] = 1
                 if event.type == pygame.QUIT:
                     print(compteur)
                     pygame.display.quit()
                     sys.exit()
-                    
+
+
         
 
     def update(self):
@@ -67,8 +76,8 @@ class Pygame_app:
         met a jour le jeu de la vie 
         """
         pygame.display.flip()
-        clock.tick(60)
-        self.game.tour2()
+        clock.tick(10)
+        self.game.tour()
 
 
     def draw(self):
@@ -78,12 +87,11 @@ class Pygame_app:
         self.screen.fill([255,255,255])
         for h in range (self.game.hauteur):
             for l in range (self.game.largeur):
-                if self.game.tab[h+1][l+1] == 1:
+                if self.game.tab[h][l] == 1:
                     pygame.draw.rect(self.screen,[0,0,0],(l*6,h*6,6,6)) 
         
     
 a = Pygame_app()
-a.game.hasard(0.1)
 a.run()
 
 
